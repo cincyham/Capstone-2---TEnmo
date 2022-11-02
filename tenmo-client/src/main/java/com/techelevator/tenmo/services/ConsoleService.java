@@ -1,7 +1,7 @@
 package com.techelevator.tenmo.services;
 
 
-import com.techelevator.tenmo.model.UserCredentials;
+import com.techelevator.tenmo.model.*;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
@@ -46,11 +46,43 @@ public class ConsoleService {
         System.out.println();
     }
 
+    public void printAccountBalance(Account account) {
+        //TODO: make better
+        System.out.println(account.getBalance());
+    }
+    public void printTransferArray(Transfer[] transfers) {
+        //TODO: make better
+        for (Transfer transfer : transfers) {
+            System.out.print(transfer.getTransferId() + " | ");
+            System.out.print(transfer.getTransferType().getTransferTypeDesc() + " | ");
+            System.out.print(transfer.getTransferStatus().getTransferStatusDesc() + " | ");
+            System.out.print(transfer.getUserFrom().getUsername() + " | ");
+            System.out.print(transfer.getUserTo().getUsername() + " | ");
+            System.out.println(transfer.getAmount());
+        }
+    }
+
     public UserCredentials promptForCredentials() {
         String username = promptForString("Username: ");
         String password = promptForString("Password: ");
         return new UserCredentials(username, password);
     }
+    public Transfer promptForSend(AuthenticatedUser authenticatedUser) {
+        TransferStatus status = new TransferStatus();
+        status.setTransferStatusDesc("Approved");
+
+        TransferType type = new TransferType();
+        type.setTransferTypeDesc("Send");
+
+        String toUsername = promptForString("Username of recipient: ");
+        User userTo = new User();
+        userTo.setUsername(toUsername.trim());
+
+        BigDecimal amount = promptForBigDecimal("Amount: ");
+
+        return new Transfer(type, status, authenticatedUser.getUser(), userTo, amount);
+    }
+
 
     public String promptForString(String prompt) {
         System.out.print(prompt);
