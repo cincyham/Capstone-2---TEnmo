@@ -120,7 +120,8 @@ public class App {
 
 	private void requestBucks() {
 		// TODO Auto-generated method stub
-		
+		Transfer transfer = consoleService.promptForRequest(currentUser);
+        transferService.createTransfer(currentUser, transfer);
 	}
 
 }

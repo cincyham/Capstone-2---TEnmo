@@ -83,6 +83,33 @@ public class ConsoleService {
         return new Transfer(type, status, authenticatedUser.getUser(), userTo, amount);
     }
 
+    public Transfer promptForRequest(AuthenticatedUser authenticatedUser) {
+        TransferStatus status = new TransferStatus();
+        status.setTransferStatusDesc("Pending");
+
+        TransferType type = new TransferType();
+        type.setTransferTypeDesc("Request");
+
+        String toUsername = promptForString("Username of sender: ");
+        User userFrom = new User();
+        userFrom.setUsername(toUsername.trim());
+
+        BigDecimal amount = promptForBigDecimal("Amount: ");
+
+        return new Transfer(type, status, userFrom, authenticatedUser.getUser(), amount);
+    }
+
+
+    private String promptForUsername() {
+        String username = null;
+        while (username == null) {
+            String test = promptForString("Username of sender: ");
+
+        }
+
+        return username;
+    }
+
 
     public String promptForString(String prompt) {
         System.out.print(prompt);
