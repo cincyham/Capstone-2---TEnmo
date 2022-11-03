@@ -4,6 +4,7 @@ package com.techelevator.tenmo.services;
 import com.techelevator.tenmo.model.*;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class ConsoleService {
@@ -78,7 +79,8 @@ public class ConsoleService {
         User userTo = new User();
         userTo.setUsername(toUsername.trim());
 
-        BigDecimal amount = promptForBigDecimal("Amount: ");
+        BigDecimal amount = promptForAmount();
+
 
         return new Transfer(type, status, authenticatedUser.getUser(), userTo, amount);
     }
@@ -94,11 +96,22 @@ public class ConsoleService {
         User userFrom = new User();
         userFrom.setUsername(toUsername.trim());
 
-        BigDecimal amount = promptForBigDecimal("Amount: ");
+        BigDecimal amount = promptForAmount();
 
         return new Transfer(type, status, userFrom, authenticatedUser.getUser(), amount);
     }
 
+    private BigDecimal promptForAmount(){
+        BigDecimal amount = new BigDecimal("0");
+        while(amount.compareTo(new BigDecimal("0")) <= 0){
+            //TODO: Add a break point
+            amount = promptForBigDecimal("Amount: ");
+            if (amount.compareTo(new BigDecimal("0")) <= 0) {
+                System.out.println("Amount must be greater than zero.");
+            }
+        }
+        return amount;
+    }
 
     private String promptForUsername(AuthenticatedUser user, UserService userService) {
         String username = null;

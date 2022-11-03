@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +58,7 @@ public class TransferController {
     }
 
     @RequestMapping(path = "/transfers", method = RequestMethod.POST)
-    public Transfer createTransfer(Principal principal, @RequestBody Transfer transfer) {
+    public Transfer createTransfer(Principal principal, @Valid @RequestBody Transfer transfer) {
         if (transfer == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Transfer not provided");
         }
