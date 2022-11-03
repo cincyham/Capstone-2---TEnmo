@@ -1,9 +1,6 @@
 package com.techelevator.tenmo.dao;
 
-import com.techelevator.tenmo.model.Transfer;
-import com.techelevator.tenmo.model.TransferStatus;
-import com.techelevator.tenmo.model.TransferType;
-import com.techelevator.tenmo.model.User;
+import com.techelevator.tenmo.model.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -58,15 +55,15 @@ public class JdbcTransferDao implements TransferDao{
     public Transfer createTransfer(Transfer transfer) {
         Integer transferTypeId = transferTypeDao.getTransferIdByDesc(transfer.getTransferType().getTransferTypeDesc());
         Integer transferStatusId = transferStatusDao.getTransferStatusIdByName(transfer.getTransferStatus().getTransferStatusDesc());
-        Integer fromAccountId = accountDao.getAccountByUsername(transfer.getUserFrom().getUsername()).getAccountId();
-        Integer toAccountId = accountDao.getAccountByUsername(transfer.getUserTo().getUsername()).getAccountId();
+        Account fromAccount = accountDao.getAccountByUsername(transfer.getUserFrom().getUsername());
+        Account toAccount =  accountDao.getAccountByUsername(transfer.getUserTo().getUsername());
         transfer.getUserTo().setId(userDao.findIdByUsername(transfer.getUserTo().getUsername()));
         transfer.getUserFrom().setId(userDao.findIdByUsername(transfer.getUserFrom().getUsername()));
         String sql =
                 "INSERT INTO transfer (transfer_type_id, transfer_status_id, account_from, account_to, amount) " +
                 "VALUES (?, ?, ?, ?, ?) " +
                 "RETURNING transfer_id;";
-        Integer transferId = jdbcTemplate.queryForObject(sql, Integer.class, transferTypeId, transferStatusId, fromAccountId, toAccountId, transfer.getAmount());
+        Integer transferId = jdbcTemplate.queryForObject(sql, Integer.class, transferTypeId, transferStatusId, fromAccount.getAccountId(), toAccount.getAccountId(), transfer.getAmount());
         return getTransferById(transferId);
     }
 
@@ -77,7 +74,38 @@ public class JdbcTransferDao implements TransferDao{
                 "FROM transfer " +
                 "WHERE transfer_id = ?;";
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, id);
-        return transferMapper(rowSet);
+        if (rowSet.next()) {
+            return transferMapper(rowSet);
+        }
+        return null;
+    }
+
+    @Override
+    public Boolean approveTransfer(Transfer transfer) {
+        try {
+            Integer approvedStatusId = transferStatusDao.getTransferStatusIdByName("Approved");
+            String sql =
+                    "UPDATE transfer " +
+                            "SET transfer_status_id = ? " +
+                            "WHERE transfer_id = ?;";
+            jdbcTemplate.update(sql, approvedStatusId, transfer.getTransferId());
+            return true;
+        } catch (Exception ignored) {}
+        return false;
+    }
+
+    @Override
+    public Boolean rejectTransfer(Transfer transfer) {
+        try {
+            Integer rejectedStatusId = transferStatusDao.getTransferStatusIdByName("Rejected");
+            String sql =
+                    "UPDATE transfer " +
+                            "SET transfer_status_id = ? " +
+                            "WHERE transfer_id = ?;";
+            jdbcTemplate.update(sql, rejectedStatusId, transfer.getTransferId());
+            return true;
+        } catch (Exception ignored) {}
+        return false;
     }
 
     private List<Transfer> transferListMapper(SqlRowSet rowSet) {
@@ -112,9 +140,11 @@ public class JdbcTransferDao implements TransferDao{
             transfer.setUserFrom(
                     userDao.getUserByAccountId(rowSet.getInt("account_from"))
             );
+            transfer.setAccountFrom(accountDao.getAccountById(rowSet.getInt("account_from")));
             transfer.setUserTo(
                     userDao.getUserByAccountId(rowSet.getInt("account_to"))
             );
+            transfer.setAccountTo(accountDao.getAccountById(rowSet.getInt("account_to")));
             transfer.setAmount(rowSet.getBigDecimal("amount"));
             return transfer;
         } catch (Exception ignored) {

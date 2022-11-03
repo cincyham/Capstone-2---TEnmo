@@ -13,5 +13,7 @@ public interface TransferDao {
 
     Transfer getTransferById(Integer id);
 
+    Boolean approveTransfer(Transfer transfer);
 
+    Boolean rejectTransfer(Transfer transfer);
 }

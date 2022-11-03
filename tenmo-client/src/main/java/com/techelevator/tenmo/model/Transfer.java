@@ -8,8 +8,10 @@ public class Transfer {
     private TransferStatus transferStatus;
 
     private User userFrom;
+    private Account accountFrom;
 
     private User userTo;
+    private Account accountTo;
     private BigDecimal amount;
 
     public Transfer() {
@@ -55,8 +57,24 @@ public class Transfer {
         this.userFrom = userFrom;
     }
 
+    public Account getAccountFrom() {
+        return accountFrom;
+    }
+
+    public void setAccountFrom(Account accountFrom) {
+        this.accountFrom = accountFrom;
+    }
+
     public User getUserTo() {
         return userTo;
+    }
+
+    public Account getAccountTo() {
+        return accountTo;
+    }
+
+    public void setAccountTo(Account accountTo) {
+        this.accountTo = accountTo;
     }
 
     public void setUserTo(User userTo) {

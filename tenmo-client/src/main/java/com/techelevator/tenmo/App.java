@@ -4,10 +4,7 @@ import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.AuthenticatedUser;
 import com.techelevator.tenmo.model.Transfer;
 import com.techelevator.tenmo.model.UserCredentials;
-import com.techelevator.tenmo.services.AccountService;
-import com.techelevator.tenmo.services.AuthenticationService;
-import com.techelevator.tenmo.services.ConsoleService;
-import com.techelevator.tenmo.services.TransferService;
+import com.techelevator.tenmo.services.*;
 
 public class App {
 
@@ -17,6 +14,7 @@ public class App {
     private final AuthenticationService authenticationService = new AuthenticationService(API_BASE_URL);
     private final AccountService accountService = new AccountService(API_BASE_URL);
     private final TransferService transferService = new TransferService(API_BASE_URL);
+    private final UserService userService = new UserService(API_BASE_URL);
     private AuthenticatedUser currentUser;
 
     public static void main(String[] args) {
@@ -95,20 +93,17 @@ public class App {
 	}
 
 	private void viewTransferHistory() {
-		// TODO Auto-generated method stub
         Transfer[] transfers = transferService.getTransfers(currentUser);
         consoleService.printTransferArray(transfers);
 	}
 
 	private void viewPendingRequests() {
-		// TODO Auto-generated method stub
 		Transfer[] transfers = transferService.getPendingTransfers(currentUser);
         consoleService.printTransferArray(transfers);
 	}
 
 	private void sendBucks() {
-		// TODO Auto-generated method stub
-		Transfer transfer =  consoleService.promptForSend(currentUser);
+		Transfer transfer =  consoleService.promptForSend(currentUser, userService);
         Account account = accountService.getBalance(currentUser);
         if (transfer.getAmount().compareTo(account.getBalance()) > 0) {
             System.out.println("Not enough money");
@@ -119,8 +114,7 @@ public class App {
 	}
 
 	private void requestBucks() {
-		// TODO Auto-generated method stub
-		Transfer transfer = consoleService.promptForRequest(currentUser);
+		Transfer transfer = consoleService.promptForRequest(currentUser, userService);
         transferService.createTransfer(currentUser, transfer);
 	}
 

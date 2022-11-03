@@ -67,14 +67,14 @@ public class ConsoleService {
         String password = promptForString("Password: ");
         return new UserCredentials(username, password);
     }
-    public Transfer promptForSend(AuthenticatedUser authenticatedUser) {
+    public Transfer promptForSend(AuthenticatedUser authenticatedUser, UserService userService) {
         TransferStatus status = new TransferStatus();
         status.setTransferStatusDesc("Approved");
 
         TransferType type = new TransferType();
         type.setTransferTypeDesc("Send");
 
-        String toUsername = promptForString("Username of recipient: ");
+        String toUsername = promptForUsername(authenticatedUser, userService);
         User userTo = new User();
         userTo.setUsername(toUsername.trim());
 
@@ -83,14 +83,14 @@ public class ConsoleService {
         return new Transfer(type, status, authenticatedUser.getUser(), userTo, amount);
     }
 
-    public Transfer promptForRequest(AuthenticatedUser authenticatedUser) {
+    public Transfer promptForRequest(AuthenticatedUser authenticatedUser, UserService userService) {
         TransferStatus status = new TransferStatus();
         status.setTransferStatusDesc("Pending");
 
         TransferType type = new TransferType();
         type.setTransferTypeDesc("Request");
 
-        String toUsername = promptForString("Username of sender: ");
+        String toUsername = promptForUsername(authenticatedUser, userService);
         User userFrom = new User();
         userFrom.setUsername(toUsername.trim());
 
@@ -100,13 +100,17 @@ public class ConsoleService {
     }
 
 
-    private String promptForUsername() {
+    private String promptForUsername(AuthenticatedUser user, UserService userService) {
         String username = null;
         while (username == null) {
-            String test = promptForString("Username of sender: ");
-
+            String testUsername = promptForString("Username: ");
+            //TODO: add in some way to quit out of this "exit"
+            if (userService.userExistsByUsername(user, testUsername)) {
+                username = testUsername;
+            } else {
+                System.out.println("Username does not exist, please try again.");
+            }
         }
-
         return username;
     }
 
