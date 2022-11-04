@@ -11,9 +11,11 @@ import java.math.BigDecimal;
 public class JdbcAccountDao implements AccountDao {
 
     private JdbcTemplate jdbcTemplate;
+    private UserDao userDao;
 
-    public JdbcAccountDao(JdbcTemplate jdbcTemplate) {
+    public JdbcAccountDao(JdbcTemplate jdbcTemplate, UserDao userDao) {
         this.jdbcTemplate = jdbcTemplate;
+        this.userDao = userDao;
     }
 
     @Override
@@ -63,7 +65,9 @@ public class JdbcAccountDao implements AccountDao {
         try {
             Account account = new Account();
             account.setAccountId(rowSet.getInt("account_id"));
-            account.setUserId(rowSet.getInt("user_id"));
+            account.setUser(
+                    userDao.getUserById(rowSet.getInt("user_id"))
+            );
             account.setBalance(rowSet.getBigDecimal("balance"));
             return account;
         } catch (Exception ignored) {

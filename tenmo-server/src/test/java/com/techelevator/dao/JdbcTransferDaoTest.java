@@ -15,29 +15,29 @@ public class JdbcTransferDaoTest extends BaseDaoTests{
     protected static final Transfer TRANSFER_1 = new Transfer(
             new TransferType(2, "Send"),
             new TransferStatus(1, "Approved"),
-            new User("user1"),
-            new User("user2"),
+            new Account("user1"),
+            new Account("user2"),
             new BigDecimal("99")
     );
     protected static final Transfer TRANSFER_2 = new Transfer(
             new TransferType(2, "Send"),
             new TransferStatus(1, "Approved"),
-            new User("user2"),
-            new User("user1"),
+            new Account("user2"),
+            new Account("user1"),
             new BigDecimal("120")
     );
     protected static final Transfer TRANSFER_3 = new Transfer(
             new TransferType(2, "Request"),
             new TransferStatus(1, "Pending"),
-            new User("user1"),
-            new User("user3"),
+            new Account("user1"),
+            new Account("user3"),
             new BigDecimal("999")
     );
     protected static final Transfer TRANSFER_4 = new Transfer(
             new TransferType(2, "Request"),
             new TransferStatus(1, "Pending"),
-            new User("user3"),
-            new User("user2"),
+            new Account("user3"),
+            new Account("user2"),
             new BigDecimal("200")
     );
     private JdbcTransferDao sut;
@@ -46,7 +46,8 @@ public class JdbcTransferDaoTest extends BaseDaoTests{
     @Before
     public void setup() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        sut = new JdbcTransferDao(jdbcTemplate, new JdbcUserDao(jdbcTemplate), new JdbcAccountDao(jdbcTemplate), new JdbcTransferStatusDao(jdbcTemplate), new JdbcTransferTypeDao(jdbcTemplate));
+        UserDao userDao = new JdbcUserDao(jdbcTemplate);
+        sut = new JdbcTransferDao(jdbcTemplate, userDao, new JdbcAccountDao(jdbcTemplate, userDao), new JdbcTransferStatusDao(jdbcTemplate), new JdbcTransferTypeDao(jdbcTemplate));
     }
 
 
@@ -167,9 +168,9 @@ public class JdbcTransferDaoTest extends BaseDaoTests{
 
         Assert.assertEquals(oneTransfer.getTransferStatus().getTransferStatusDesc(), twoTransfer.getTransferStatus().getTransferStatusDesc());
 
-        Assert.assertEquals(oneTransfer.getUserFrom().getUsername(), twoTransfer.getUserFrom().getUsername());
+        Assert.assertEquals(oneTransfer.getAccountFrom().getUsername(), twoTransfer.getAccountFrom().getUsername());
 
-        Assert.assertEquals(oneTransfer.getUserTo().getUsername(), twoTransfer.getUserTo().getUsername());
+        Assert.assertEquals(oneTransfer.getAccountTo().getUsername(), twoTransfer.getAccountTo().getUsername());
 
         Assert.assertEquals(oneTransfer.getAmount().doubleValue(), twoTransfer.getAmount().doubleValue(), 0.001);
     }

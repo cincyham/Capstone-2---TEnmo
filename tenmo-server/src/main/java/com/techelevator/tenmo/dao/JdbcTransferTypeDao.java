@@ -21,7 +21,7 @@ public class JdbcTransferTypeDao implements TransferTypeDao {
     }
 
     @Override
-    public Integer getTransferIdByDesc(String desc) {
+    public Integer getTransferTypeIdByDesc(String desc) {
         String sql =
                 "SELECT transfer_type_id " +
                 "FROM transfer_type " +

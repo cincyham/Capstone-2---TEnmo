@@ -55,12 +55,10 @@ public class JdbcTransferDao implements TransferDao{
 
     @Override
     public Transfer createTransfer(Transfer transfer) {
-        Integer transferTypeId = transferTypeDao.getTransferIdByDesc(transfer.getTransferType().getTransferTypeDesc());
+        Integer transferTypeId = transferTypeDao.getTransferTypeIdByDesc(transfer.getTransferType().getTransferTypeDesc());
         Integer transferStatusId = transferStatusDao.getTransferStatusIdByName(transfer.getTransferStatus().getTransferStatusDesc());
-        Account fromAccount = accountDao.getAccountByUsername(transfer.getUserFrom().getUsername());
-        Account toAccount =  accountDao.getAccountByUsername(transfer.getUserTo().getUsername());
-        transfer.getUserTo().setId(userDao.findIdByUsername(transfer.getUserTo().getUsername()));
-        transfer.getUserFrom().setId(userDao.findIdByUsername(transfer.getUserFrom().getUsername()));
+        Account fromAccount = accountDao.getAccountByUsername(transfer.getAccountFrom().getUsername());
+        Account toAccount =  accountDao.getAccountByUsername(transfer.getAccountTo().getUsername());
         String sql =
                 "INSERT INTO transfer (transfer_type_id, transfer_status_id, account_from, account_to, amount) " +
                 "VALUES (?, ?, ?, ?, ?) " +
@@ -139,13 +137,7 @@ public class JdbcTransferDao implements TransferDao{
                             transferStatusDao.getTransferDescriptionById(rowSet.getInt("transfer_status_id"))
                     )
             );
-            transfer.setUserFrom(
-                    userDao.getUserByAccountId(rowSet.getInt("account_from"))
-            );
             transfer.setAccountFrom(accountDao.getAccountById(rowSet.getInt("account_from")));
-            transfer.setUserTo(
-                    userDao.getUserByAccountId(rowSet.getInt("account_to"))
-            );
             transfer.setAccountTo(accountDao.getAccountById(rowSet.getInt("account_to")));
             transfer.setAmount(rowSet.getBigDecimal("amount"));
             return transfer;

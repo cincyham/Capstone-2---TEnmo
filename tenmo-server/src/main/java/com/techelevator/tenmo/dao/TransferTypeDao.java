@@ -6,5 +6,5 @@ import org.springframework.stereotype.Component;
 public interface TransferTypeDao {
     String getTransferTypeDescById(Integer id);
 
-    Integer getTransferIdByDesc(String desc);
+    Integer getTransferTypeIdByDesc(String desc);
 }

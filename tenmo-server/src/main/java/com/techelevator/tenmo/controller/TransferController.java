@@ -16,7 +16,6 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @PreAuthorize("isAuthenticated()")
@@ -71,26 +70,30 @@ public class TransferController {
         return null;
     }
 
-    @RequestMapping(path = "/transfers/id/accept", method = RequestMethod.PUT)
-    public void acceptTransfer(Principal principal, @RequestBody Integer transferId) {
+    @RequestMapping(path = "/transfers/id/approve", method = RequestMethod.PUT)
+    public Boolean approveTransfer(Principal principal, @RequestBody Integer transferId) {
         Transfer toAccept = transferDao.getTransferById(transferId);
         if (toAccept == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Transfer does not exist");
+        } else if (!toAccept.getAccountFrom().getUsername().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Transfer can only be approved by the user sending the money");
         } else if (toAccept.getAccountFrom().getBalance().compareTo(toAccept.getAmount()) < 0) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Insufficient funds.");
         }
 
         if (transferDao.approveTransfer(toAccept)) {
             accountDao.transferMoney(toAccept.getAccountFrom(), toAccept.getAccountTo(), toAccept.getAmount());
+            return true;
         }
+        return false;
     }
 
     @RequestMapping(path = "/transfers/id/reject", method = RequestMethod.PUT)
-    public void rejectTransfer(Principal principal, @RequestBody Integer transferId) {
+    public Boolean rejectTransfer(Principal principal, @RequestBody Integer transferId) {
         Transfer toAccept = transferDao.getTransferById(transferId);
         if (toAccept == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Transfer does not exist");
         }
-        transferDao.rejectTransfer(toAccept);
+        return transferDao.rejectTransfer(toAccept);
     }
 }

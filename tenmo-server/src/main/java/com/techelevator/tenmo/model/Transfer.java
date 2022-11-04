@@ -12,11 +12,7 @@ public class Transfer {
     private TransferType transferType;
     @NotNull(message ="Transfer Status must not be null.")
     private TransferStatus transferStatus;
-    @NotNull(message ="User From must not be null.")
-    private User userFrom;
     private Account accountFrom;
-    @NotNull(message ="User to must not be null.")
-    private User userTo;
     private Account accountTo;
     @NotNull(message ="Amount must not be null.")
     @Positive(message = "Amount must be greater than zero.")
@@ -25,11 +21,11 @@ public class Transfer {
     public Transfer() {
     }
 
-    public Transfer(TransferType transferType, TransferStatus transferStatus, User userFrom, User userTo, BigDecimal amount) {
+    public Transfer(TransferType transferType, TransferStatus transferStatus, Account accountFrom, Account accountTo, BigDecimal amount) {
         this.transferType = transferType;
         this.transferStatus = transferStatus;
-        this.userFrom = userFrom;
-        this.userTo = userTo;
+        this.accountFrom = accountFrom;
+        this.accountTo = accountTo;
         this.amount = amount;
     }
 
@@ -57,14 +53,6 @@ public class Transfer {
         this.transferStatus = transferStatus;
     }
 
-    public User getUserFrom() {
-        return userFrom;
-    }
-
-    public void setUserFrom(User userFrom) {
-        this.userFrom = userFrom;
-    }
-
     public Account getAccountFrom() {
         return accountFrom;
     }
@@ -73,20 +61,12 @@ public class Transfer {
         this.accountFrom = accountFrom;
     }
 
-    public User getUserTo() {
-        return userTo;
-    }
-
     public Account getAccountTo() {
         return accountTo;
     }
 
     public void setAccountTo(Account accountTo) {
         this.accountTo = accountTo;
-    }
-
-    public void setUserTo(User userTo) {
-        this.userTo = userTo;
     }
 
     public BigDecimal getAmount() {

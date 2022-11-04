@@ -20,8 +20,8 @@ public class AccountController {
 
 
     //TODO: rename this to be more accurate
-    @RequestMapping(path = "/balance", method = RequestMethod.GET)
-    public Account balance(Principal principal) {
+    @RequestMapping(path = "/account", method = RequestMethod.GET)
+    public Account getAccount(Principal principal) {
         return accountDao.getAccountByUsername(principal.getName());
     }
 }

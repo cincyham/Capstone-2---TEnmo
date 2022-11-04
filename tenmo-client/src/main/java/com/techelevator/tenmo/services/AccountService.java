@@ -23,7 +23,7 @@ public class AccountService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(user.getToken());
         HttpEntity<Void> entity = new HttpEntity<>(headers);
-        ResponseEntity<Account> response = restTemplate.exchange(baseUrl + "api/balance", HttpMethod.GET, entity, Account.class);
+        ResponseEntity<Account> response = restTemplate.exchange(baseUrl + "api/account", HttpMethod.GET, entity, Account.class);
         return response.getBody();
     }
 }

@@ -1,7 +1,6 @@
 package com.techelevator.dao;
 
 import com.techelevator.tenmo.dao.JdbcTransferTypeDao;
-import com.techelevator.tenmo.dao.JdbcUserDao;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,7 +35,7 @@ public class JdbcTransferTypeDaoTest extends BaseDaoTests{
     @Test
     public void getTransferIdByDesc_returns1_descRequest(){
 
-        int result = sut.getTransferIdByDesc("Request");
+        int result = sut.getTransferTypeIdByDesc("Request");
 
         Assert.assertEquals(result, 1);
     }
@@ -44,7 +43,7 @@ public class JdbcTransferTypeDaoTest extends BaseDaoTests{
     @Test
     public void getTransferIdByDesc_returns2_descSend(){
 
-        int result = sut.getTransferIdByDesc("Send");
+        int result = sut.getTransferTypeIdByDesc("Send");
 
         Assert.assertEquals(result, 2);
     }

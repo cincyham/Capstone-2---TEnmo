@@ -18,7 +18,7 @@ public class JdbcAccountDaoTest extends BaseDaoTests{
     @Before
     public void setup() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        sut = new JdbcAccountDao(jdbcTemplate);
+        sut = new JdbcAccountDao(jdbcTemplate, new JdbcUserDao(jdbcTemplate));
     }
 
     @Test
@@ -74,7 +74,7 @@ public class JdbcAccountDaoTest extends BaseDaoTests{
 
     private void assertAccountsEqual(Account account, int account_id, int user_id, double balance){
         Assert.assertEquals(account.getAccountId(), account_id);
-        Assert.assertEquals(user_id, account.getUserId());
+        Assert.assertEquals(user_id, account.getUser().getId());
         Assert.assertEquals(balance, account.getBalance().doubleValue(), 0.0001);
     }
 }
