@@ -70,9 +70,7 @@ public class JdbcAccountDao implements AccountDao {
             );
             account.setBalance(rowSet.getBigDecimal("balance"));
             return account;
-        } catch (Exception ignored) {
-            //TODO: impliment
-        }
+        } catch (Exception ignored) {}
         return null;
     }
 }

@@ -10,6 +10,12 @@ public interface UserDao {
 
     User getUserById(int id);
 
+    /**
+     *
+     * @param username tenmo username
+     * @return tenmo user model object
+     */
+
     User findByUsername(String username);
 
     int findIdByUsername(String username);
@@ -17,6 +23,12 @@ public interface UserDao {
     boolean create(String username, String password);
 
     User getUserByAccountId(Integer accountId);
+
+    /**
+     *
+     * @param username tenmo username
+     * @return boolean of success/failure
+     */
 
     boolean userExistsByUsername(String username);
 }

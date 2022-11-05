@@ -105,7 +105,7 @@ public class App {
 	}
 
 	private void sendBucks() {
-		Transfer transfer =  consoleService.promptForSend(currentUser, userService);
+		Transfer transfer =  consoleService.promptForSendTransfer(currentUser, userService);
         Account account = accountService.getBalance(currentUser);
         if (transfer.getAmount().compareTo(account.getBalance()) > 0) {
             System.out.println("Not enough money");
@@ -116,7 +116,7 @@ public class App {
 	}
 
 	private void requestBucks() {
-		Transfer transfer = consoleService.promptForRequest(currentUser, userService);
+		Transfer transfer = consoleService.promptForRequestTransfer(currentUser, userService);
         transferService.createTransfer(currentUser, transfer);
 	}
 

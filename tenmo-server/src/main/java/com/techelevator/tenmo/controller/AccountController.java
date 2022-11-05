@@ -18,8 +18,6 @@ public class AccountController {
         this.accountDao = accountDao;
     }
 
-
-    //TODO: rename this to be more accurate
     @RequestMapping(path = "/account", method = RequestMethod.GET)
     public Account getAccount(Principal principal) {
         return accountDao.getAccountByUsername(principal.getName());

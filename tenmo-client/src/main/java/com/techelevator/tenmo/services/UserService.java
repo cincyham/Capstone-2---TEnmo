@@ -13,9 +13,12 @@ public class UserService {
     }
 
     public boolean userExistsByUsername(AuthenticatedUser user, String username) {
-        HttpEntity<Void> entity = makeAuthEntity(user);
-        ResponseEntity<Boolean> response = restTemplate.exchange(baseUrl + "api/users/" + username + "/exists", HttpMethod.GET, entity, Boolean.class);
-        return response.getBody();
+        try {
+            HttpEntity<Void> entity = makeAuthEntity(user);
+            ResponseEntity<Boolean> response = restTemplate.exchange(baseUrl + "api/users/" + username + "/exists", HttpMethod.GET, entity, Boolean.class);
+            return response.getBody();
+        } catch (Exception ignored){}
+        return false;
     }
 
     private HttpEntity<Void> makeAuthEntity(AuthenticatedUser user) {

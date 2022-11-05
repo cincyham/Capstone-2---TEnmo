@@ -55,14 +55,19 @@ public class ConsoleService {
     public void promptForTransferDetails(Transfer[] transfers, AuthenticatedUser authenticatedUser, TransferService transferService) {
         int transferId = promptForInt("\nPlease enter transfer ID to view details (0 to cancel): ");
         if (transferId != 0) {
+            boolean transferFound = false;
             for (Transfer transfer : transfers) {
                 if (transfer.getTransferId() == transferId) {
                     printTransferDetails(transfer);
                     if (transfer.getTransferStatus().getTransferStatusDesc().equals("Pending") && transfer.getAccountFrom().getUsername().equals(authenticatedUser.getUser().getUsername())) {
                         promptForApproveReject(transfer, authenticatedUser, transferService);
                     }
+                    transferFound = true;
                     break;
                 }
+            }
+            if (!transferFound) {
+                System.out.println("\nTransfer id not found.");
             }
         }
     }
@@ -135,7 +140,6 @@ public class ConsoleService {
         printRightHeading("Amount", colWidth);
         newLine();
         printBar(BAR_CHARACTER);
-        //TODO: make better
         for (Transfer transfer : transfers) {
             String fromTo;
             String amount = String.format("$ %.2f", transfer.getAmount().doubleValue());
@@ -194,7 +198,7 @@ public class ConsoleService {
         String password = promptForString("Password: ");
         return new UserCredentials(username, password);
     }
-    public Transfer promptForSend(AuthenticatedUser authenticatedUser, UserService userService) {
+    public Transfer promptForSendTransfer(AuthenticatedUser authenticatedUser, UserService userService) {
         TransferStatus status = new TransferStatus();
         status.setTransferStatusDesc("Approved");
 
@@ -209,7 +213,7 @@ public class ConsoleService {
         return new Transfer(type, status, new Account(authenticatedUser.getUser().getUsername()), accountTo, amount);
     }
 
-    public Transfer promptForRequest(AuthenticatedUser authenticatedUser, UserService userService) {
+    public Transfer promptForRequestTransfer(AuthenticatedUser authenticatedUser, UserService userService) {
         TransferStatus status = new TransferStatus();
         status.setTransferStatusDesc("Pending");
 
@@ -227,7 +231,6 @@ public class ConsoleService {
     private BigDecimal promptForAmount(){
         BigDecimal amount = new BigDecimal("0");
         while(amount.compareTo(new BigDecimal("0")) <= 0){
-            //TODO: Add a break point
             amount = promptForBigDecimal("Amount: ");
             if (amount.compareTo(new BigDecimal("0")) <= 0) {
                 System.out.println("Amount must be greater than zero.");
@@ -240,7 +243,6 @@ public class ConsoleService {
         String username = null;
         while (username == null) {
             String testUsername = promptForString("Username: ");
-            //TODO: add in some way to quit out of this "exit"
             if (userService.userExistsByUsername(user, testUsername)) {
                 username = testUsername;
             } else {

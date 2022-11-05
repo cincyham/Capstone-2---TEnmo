@@ -115,9 +115,7 @@ public class JdbcTransferDao implements TransferDao{
                 transfers.add(transferMapper(rowSet));
             }
             return transfers;
-        } catch (Exception ignored) {
-            //TODO: implement
-        }
+        } catch (Exception ignored) {}
         return null;
     }
 
@@ -141,9 +139,7 @@ public class JdbcTransferDao implements TransferDao{
             transfer.setAccountTo(accountDao.getAccountById(rowSet.getInt("account_to")));
             transfer.setAmount(rowSet.getBigDecimal("amount"));
             return transfer;
-        } catch (Exception ignored) {
-            //TODO: implement
-        }
+        } catch (Exception ignored) {}
         return null;
     }
 
