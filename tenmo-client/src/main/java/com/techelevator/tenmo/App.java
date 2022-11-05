@@ -94,15 +94,19 @@ public class App {
 
 	private void viewTransferHistory() {
         Transfer[] transfers = transferService.getTransfers(currentUser);
-        consoleService.printTransferArray(transfers, currentUser);
-        consoleService.promptForTransferDetails(transfers, currentUser, transferService);
+        viewTransfers(transfers);
 	}
 
 	private void viewPendingRequests() {
 		Transfer[] transfers = transferService.getPendingTransfers(currentUser);
-        consoleService.printTransferArray(transfers, currentUser);
-        consoleService.promptForTransferDetails(transfers, currentUser, transferService);
+        viewTransfers(transfers);
 	}
+    private void viewTransfers(Transfer[] transfers) {
+        consoleService.printTransferArray(transfers, currentUser);
+        if (transfers.length > 0) {
+            consoleService.promptForTransferDetails(transfers, currentUser, transferService);
+        }
+    }
 
 	private void sendBucks() {
 		Transfer transfer =  consoleService.promptForSendTransfer(currentUser, userService);

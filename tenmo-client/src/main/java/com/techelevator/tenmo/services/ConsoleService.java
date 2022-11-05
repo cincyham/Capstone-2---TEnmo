@@ -59,6 +59,7 @@ public class ConsoleService {
             for (Transfer transfer : transfers) {
                 if (transfer.getTransferId() == transferId) {
                     printTransferDetails(transfer);
+                    //if pending && user is person sending money
                     if (transfer.getTransferStatus().getTransferStatusDesc().equals("Pending") && transfer.getAccountFrom().getUsername().equals(authenticatedUser.getUser().getUsername())) {
                         promptForApproveReject(transfer, authenticatedUser, transferService);
                     }
@@ -97,7 +98,7 @@ public class ConsoleService {
     private int promptForApproveReject() {
         int response = -1;
         while (response != 0 & response != 1 & response != 2) {
-            response = promptForInt("1) Approve\n2) Reject\n0)Don't Approve or Reject");
+            response = promptForInt("\n1) Approve\n2) Reject\n0) Don't Approve or Reject\n");
             if (response != 0 & response != 1 & response != 2) {
                 System.out.println("Please choose a valid option or 0 to exit");
             }

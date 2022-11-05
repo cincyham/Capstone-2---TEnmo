@@ -9,21 +9,15 @@ import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 
-public class AccountService {
-
-    private final String baseUrl;
-    private final RestTemplate restTemplate = new RestTemplate();
+public class AccountService extends BaseService{
 
     public AccountService(String baseUrl) {
-        this.baseUrl = baseUrl;
+        super(baseUrl);
     }
 
     public Account getBalance(AuthenticatedUser user) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(user.getToken());
-        HttpEntity<Void> entity = new HttpEntity<>(headers);
-        ResponseEntity<Account> response = restTemplate.exchange(baseUrl + "api/account", HttpMethod.GET, entity, Account.class);
+        HttpEntity<Void> entity = createAuthorizedEntity(user);
+        ResponseEntity<Account> response = restTemplate.exchange(BASE_URL + "api/account", HttpMethod.GET, entity, Account.class);
         return response.getBody();
     }
 }

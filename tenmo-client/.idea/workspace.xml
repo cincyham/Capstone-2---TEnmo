@@ -5,35 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="425b6eac-07dc-418e-9e0f-40cb605f9199" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../tenmo-server/src/test/java/com/techelevator/controller/AccountControllerTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../tenmo-server/src/test/java/com/techelevator/controller/BaseControllerTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../tenmo-server/src/test/java/com/techelevator/controller/model/AuthenticatedUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../tenmo-server/src/test/java/com/techelevator/controller/model/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../tenmo-server/src/test/java/com/techelevator/controller/model/UserCredentials.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/services/BaseService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/techelevator/tenmo/services/BaseService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/2022-11-05.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/2022-11-05.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/model/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/model/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/model/Transfer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/model/Transfer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/services/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/services/AccountService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/services/ConsoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/services/ConsoleService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/services/TransferService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/services/TransferService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/services/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/techelevator/tenmo/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/techelevator/tenmo/App.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/techelevator/tenmo/model/Account.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/techelevator/tenmo/model/Account.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/techelevator/tenmo/model/Transfer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/techelevator/tenmo/model/Transfer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/techelevator/tenmo/services/AccountService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/techelevator/tenmo/services/AccountService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/techelevator/tenmo/services/ConsoleService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/techelevator/tenmo/services/ConsoleService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/techelevator/tenmo/services/TransferService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/techelevator/tenmo/services/TransferService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/controller/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/controller/AccountController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/controller/TransferController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/controller/TransferController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/dao/JdbcAccountDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/dao/JdbcAccountDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/dao/JdbcTransferDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/dao/JdbcTransferDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/dao/JdbcTransferTypeDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/dao/JdbcTransferTypeDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/dao/TransferTypeDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/dao/TransferTypeDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/model/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/model/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/model/Transfer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/model/Transfer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/test/java/com/techelevator/dao/JdbcAccountDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tenmo-server/src/test/java/com/techelevator/dao/JdbcAccountDaoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/test/java/com/techelevator/dao/JdbcTransferDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tenmo-server/src/test/java/com/techelevator/dao/JdbcTransferDaoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/test/java/com/techelevator/dao/JdbcTransferTypeDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tenmo-server/src/test/java/com/techelevator/dao/JdbcTransferTypeDaoTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
